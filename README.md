@@ -18,7 +18,13 @@ request.configure({
 request.get('/path/to', {}, function (err, data) {
   
 });
+```
 
+If you're using [observables](https://www.npmjs.com/package/observ) you could...
+
+```js
+request.configure(state.request.config());
+state.request.config(request.configure);
 ```
 
 ## Acknowledgement
