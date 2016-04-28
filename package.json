@@ -21,8 +21,21 @@
   },
   "homepage": "https://github.com/chrisinajar/config-request#readme",
   "devDependencies": {
+    "express": "^4.13.4",
     "semistandard": "^7.0.5",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1"
+  },
+  "dependencies": {
+    "geval": "^2.1.1",
+    "http-status-error": "^1.1.1",
+    "is-error-code": "^1.0.0",
+    "is-function": "^1.0.1",
+    "is-obj": "^1.0.1",
+    "query-string-flatten": "^1.0.0",
+    "safe-json-parse": "^4.0.0",
+    "url-join": "^1.1.0",
+    "xhr-request": "^1.0.1",
+    "xtend": "^4.0.1"
   }
 }
