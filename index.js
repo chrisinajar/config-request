@@ -16,7 +16,8 @@ module.exports = httpMethods(Request);
 Request.configure = configure;
 
 var config = {
-  baseUrl: 'http://localhost:8000'
+  baseUrl: 'http://localhost:8000',
+  token: null
 };
 
 // RequestEvent = Event()
@@ -39,9 +40,9 @@ function Request (path, options, callback) {
 }
 
 function setToken (options) {
-  if (!options.token) return;
+  if (!options.token && !config.token) { return; }
   options.headers = options.headers || {};
-  options.headers['X-Auth-Token'] = options.token;
+  options.headers['X-Auth-Token'] = options.token || config.token;
   delete options.token;
 }
 
