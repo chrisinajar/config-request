@@ -42,7 +42,9 @@ function Request (path, options, callback) {
 function setToken (options) {
   if (!options.token && !config.token) { return; }
   options.headers = options.headers || {};
-  options.headers['X-Auth-Token'] = options.token || config.token;
+  var keyName = options.authorization || config.authorization || 'Authorization';
+
+  options.headers[keyName] = options.token || config.token;
   delete options.token;
 }
 

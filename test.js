@@ -26,7 +26,7 @@ methods.forEach(function (method) {
 });
 
 test('token config', function (t) {
-  t.plan(5);
+  t.plan(10);
   var server = Server();
   Server.start(server);
 
@@ -35,6 +35,11 @@ test('token config', function (t) {
   });
 
   server.get('/', function (req, res) {
+    t.equal(req.headers['authorization'], 'hello', 'receives token');
+    t.ok(true, 'receives get');
+    res.send('ok');
+  });
+  server.get('/xauth', function (req, res) {
     t.equal(req.headers['x-auth-token'], 'hello', 'receives token');
     t.ok(true, 'receives get');
     res.send('ok');
@@ -44,7 +49,16 @@ test('token config', function (t) {
     t.ok(true, 'returns');
     t.equal(data, 'ok');
 
-    // done
-    Server.stop(server);
+    request.configure({
+      authorization: 'X-Auth-Token'
+    });
+    request.get('/xauth', function (err, data) {
+      t.notOk(err, 'not an error');
+      t.ok(true, 'returns');
+      t.equal(data, 'ok');
+
+      // done
+      Server.stop(server);
+    });
   });
 });
