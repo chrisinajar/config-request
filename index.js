@@ -32,7 +32,7 @@ function Request (path, options, callback) {
     callback = options;
     options = {};
   }
-  options = extend(options, config.options);
+  options = extend(config.options, options);
   setQuery(options);
   setToken(options);
   var url = join(config.baseUrl, path);
