@@ -79,6 +79,7 @@ function responseHandler (callback, options) {
       });
     }
 
+    data = isFunction(options.parse) ? options.parse(data, response) : data
     callback(null, data);
   };
 }
