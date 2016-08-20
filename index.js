@@ -79,7 +79,8 @@ function responseHandler (callback, options) {
       });
     }
 
-    data = isFunction(options.parse) ? options.parse(data, response) : data
+    var parse = options.parse || config.parse;
+    data = isFunction(parse) ? parse(data, response) : data;
     callback(null, data);
   };
 }
