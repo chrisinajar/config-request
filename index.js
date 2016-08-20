@@ -17,6 +17,7 @@ Request.configure = configure;
 
 var config = {
   baseUrl: 'http://localhost:8000',
+  jwt: false,
   token: null
 };
 
@@ -43,8 +44,13 @@ function setToken (options) {
   if (!options.token && !config.token) { return; }
   options.headers = options.headers || {};
   var keyName = options.authorization || config.authorization || 'Authorization';
+  var token = options.token || config.token;
+  
+  if (options.jwt || config.jwt) {
+    token = 'Bearer ' + token;
+  }
 
-  options.headers[keyName] = options.token || config.token;
+  options.headers[keyName] = token;
   delete options.token;
 }
 
