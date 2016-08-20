@@ -18,7 +18,10 @@ Request.configure = configure;
 var config = {
   baseUrl: 'http://localhost:8000',
   jwt: false,
-  token: null
+  token: null,
+  options: {
+    json: true
+  }
 };
 
 // RequestEvent = Event()
@@ -29,7 +32,7 @@ function Request (path, options, callback) {
     callback = options;
     options = {};
   }
-  options = extend(options);
+  options = extend(options, config.options);
   setQuery(options);
   setToken(options);
   var url = join(config.baseUrl, path);
