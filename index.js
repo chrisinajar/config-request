@@ -89,6 +89,9 @@ function createError (data, response, callback) {
   var error = httpError(response.statusCode);
   if (!data) return callback(error);
   if (data) {
+    if (Array.isArray(data)) {
+      data = data[0]
+    }
     if (isObject(data)) {
       return callback(assign(error, data));
     }
