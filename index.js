@@ -17,7 +17,11 @@ Request.configure = configure;
 
 var config = {
   baseUrl: 'http://localhost:8000',
-  token: null
+  jwt: false,
+  token: null,
+  options: {
+    json: true
+  }
 };
 
 // RequestEvent = Event()
@@ -28,7 +32,7 @@ function Request (path, options, callback) {
     callback = options;
     options = {};
   }
-  options = extend(options);
+  options = extend(config.options, options);
   setQuery(options);
   setToken(options);
   var url = join(config.baseUrl, path);
@@ -43,8 +47,13 @@ function setToken (options) {
   if (!options.token && !config.token) { return; }
   options.headers = options.headers || {};
   var keyName = options.authorization || config.authorization || 'Authorization';
+  var token = options.token || config.token;
+  
+  if (options.jwt || config.jwt) {
+    token = 'Bearer ' + token;
+  }
 
-  options.headers[keyName] = options.token || config.token;
+  options.headers[keyName] = token;
   delete options.token;
 }
 
@@ -70,6 +79,8 @@ function responseHandler (callback, options) {
       });
     }
 
+    var parse = options.parse || config.parse;
+    data = isFunction(parse) ? parse(data, response) : data;
     callback(null, data);
   };
 }
@@ -78,6 +89,9 @@ function createError (data, response, callback) {
   var error = httpError(response.statusCode);
   if (!data) return callback(error);
   if (data) {
+    if (Array.isArray(data)) {
+      data = data[0]
+    }
     if (isObject(data)) {
       return callback(assign(error, data));
     }
