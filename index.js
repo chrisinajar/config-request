@@ -19,9 +19,7 @@ var config = {
   baseUrl: 'http://localhost:8000',
   jwt: false,
   token: null,
-  options: {
-    json: true
-  }
+  options: {}
 };
 
 // RequestEvent = Event()
@@ -48,7 +46,7 @@ function setToken (options) {
   options.headers = options.headers || {};
   var keyName = options.authorization || config.authorization || 'Authorization';
   var token = options.token || config.token;
-  
+
   if (options.jwt || config.jwt) {
     token = 'Bearer ' + token;
   }
@@ -90,7 +88,7 @@ function createError (data, response, callback) {
   if (!data) return callback(error);
   if (data) {
     if (Array.isArray(data)) {
-      data = data[0]
+      data = data[0];
     }
     if (isObject(data)) {
       return callback(assign(error, data));
