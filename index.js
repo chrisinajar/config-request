@@ -68,18 +68,18 @@ function responseHandler (callback, options) {
     // var end = new Date()
 
     if (err) {
-      return callback(err);
+      return callback(err, null, response);
     }
 
     if (isError(response.statusCode)) {
       return createError(data, response, function (err) {
-        callback(err);
+        callback(err, null, response);
       });
     }
 
     var parse = options.parse || config.parse;
     data = isFunction(parse) ? parse(data, response) : data;
-    callback(null, data);
+    callback(null, data, response);
   };
 }
 
