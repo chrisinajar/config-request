@@ -25,6 +25,7 @@ function Client (config) {
   config = extend(defaultConfig, config);
 
   Request.configure = configure;
+  Request.config = config;
 
   return httpMethods(Request);
 
